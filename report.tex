@@ -1,0 +1,87 @@
+% !Mode:: "TeX:UTF-8"
+\documentclass[bachelor,openany, oneside, color,AutoFakeBold=true]{buaathesis}
+
+% 参考文献
+\usepackage{gbt7714}
+% 参考文献输出方式，numerical为按照出现顺序，authoryear为按照作者姓名和年份
+\citestyle{numerical}
+% \citestyle{authoryear}
+
+\usepackage{listings} % 显示代码
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b
+}
+
+\usepackage{xcolor} % 用于颜色定义
+ 
+% 定义MATLAB语言样式
+\lstdefinelanguage{MATLAB}{
+    keywords={function, end, for, while, if, else, elseif, return, break, continue, global, persistent},
+    keywordstyle=\color{blue}\bfseries,
+    comment=[l]\%,
+    commentstyle=\color{green}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    morestring=[b]',
+    morestring=[b]",
+    sensitive=true,
+    morecomment=[l]\%,
+    morecomment=[s]{\%\{}{\}\%}, % 支持块注释（如MATLAB R2016b+）
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    tabsize=4,
+    showstringspaces=false
+}
+
+\begin{document}
+
+% 用户信息
+\include{data/com_info}
+\include{data/bachelor/bachelor_info}
+
+
+% 页眉页脚样式
+\pagestyle{mainmatter}
+% 封面
+\maketitle
+
+% 中英文摘要
+% 摘要内容参考 data/sample/abstract.tex
+
+% 目录
+\tableofcontents
+
+% 正文页码样式
+\mainmatter
+
+% 正文
+\chapter{一级标题/章标题}
+
+\section{二级标题/节标题}
+
+\subsection{三级标题/小节标题}
+
+正文内容
+
+
+% 参考文献
+% 引用方式参考 data/sample/reference.tex
+
+% 附录
+% \appendix
+
+
+\end{document}
