@@ -1,62 +1,61 @@
 name: Build Paper
 
 on:
-  - push
-  - pull_request
+  push:
+  pull_request:
 
 jobs:
-  unittest:
+  build:
     name: Paper build
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'ci skip')"
+
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - 'ubuntu-22.04'
         latex-entry:
-          - 'sample-bachelor'
-          - 'sample-kaitireport'
-          - 'sample-master'
+          - sample-bachelor
+          - sample-kaitireport
+          - sample-master
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 10
-      - name: Set up system dependences on linux
-        if: ${{ runner.os == 'Linux' }}
+        uses: actions/checkout@v3
+
+      - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y tree cloc make
-      - name: Load the font requirements
-        run: |
-          mkdir -p ./local_fonts
+          sudo apt-get install -y \
+            make tree cloc \
+            fontconfig \
+            ttf-mscorefonts-installer
 
-          curl -L 'https://github.com/dolbydu/font/raw/master/unicode/SimSun.ttc' -o ./local_fonts/SimSun.ttc  # download songti
-          curl -L 'https://github.com/dolbydu/font/raw/master/unicode/SimHei.ttf' -o ./local_fonts/SimHei.ttf  # download heiti
-          curl -L 'https://github.com/dolbydu/font/raw/master/unicode/STXingkai.TTF' -o ./local_fonts/STXingkai.ttf  # download STXingKai
-          curl -L 'https://github.com/dolbydu/font/raw/master/unicode/STKaiti.TTF' -o ./local_fonts/STKaiti.ttf  # download STKaiTi
-      - name: Test the basic environment
+      - name: Prepare directories for LaTeX include
         run: |
-          tree .
-          cloc .
-      - name: Compile ${{ matrix.latex-entry }}.tex to pdf
+          mkdir -p data/sample
+
+      - name: Load local fonts
+        run: |
+          mkdir -p local_fonts
+          curl -L https://github.com/dolbydu/font/raw/master/unicode/SimSun.ttc -o local_fonts/SimSun.ttc
+          curl -L https://github.com/dolbydu/font/raw/master/unicode/SimHei.ttf -o local_fonts/SimHei.ttf
+          curl -L https://github.com/dolbydu/font/raw/master/unicode/STXingkai.TTF -o local_fonts/STXingkai.ttf
+          curl -L https://github.com/dolbydu/font/raw/master/unicode/STKaiti.TTF -o local_fonts/STKaiti.ttf
+          fc-cache -f
+
+      - name: Compile ${{ matrix.latex-entry }}.tex
         uses: xu-cheng/latex-action@v3
         with:
           root_file: ${{ matrix.latex-entry }}.tex
           latexmk_use_xelatex: true
           latexmk_shell_escape: true
-          extra_fonts: |
-            ./local_fonts/*
-          pre_compile: |
-            apk add msttcorefonts-installer fontconfig
-            update-ms-fonts
-            fc-cache -f
-      - name: Test the compiled file
-        run: |
-          ls -al *.pdf
-      - uses: actions/upload-artifact@v2
+          extra_fonts: local_fonts
+
+      - name: Check output
+        run: ls -al *.pdf
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.latex-entry }}.pdf
+          name: ${{ matrix.latex-entry }}
           path: ${{ matrix.latex-entry }}.pdf
