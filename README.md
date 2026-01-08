@@ -1,20 +1,33 @@
-# BUAAthesis
+# BUAA LaTeX Template
 
-北航毕设论文 LaTeX 模板
+北航适用于各类大作业的 LaTeX 模板
 
 ## 项目说明
 
-这是北航开源俱乐部维护的的北航毕设论文的 LaTeX 模板
+这是源自北航开源俱乐部维护的的北航毕设论文的 LaTeX 模板，我是24年下载的他们的模板，并做了简单的改动，方便简单的大作业或者实验报告的编写，省去了对完整了论文模板进行大量的修改的过程。
 
-目前仍在开发中，欢迎关注进展，提交 bug/issue，甚至贡献代码
+需要原始的北航毕业论文模板，请转到[北航毕业论文 LaTeX 模板](https://github.com/BHOSC/BUAAthesis)
 
-## 预览
 
-项目发布了最新版本的编译好的 [PDF 样例文档](https://github.com/BHOSC/BUAAthesis/releases/latest) 供大家预览：
+## 使用方法
+这里只介绍改模板的一些比较基础的内容更改方式。如果需要了解 $\LaTeX$ 的使用方法，请转到[LaTeX使用方法（中文版）](https://texdoc.org/serve/lshort-zh-cn.pdf/0)或[LaTeX使用方法（Github）](https://github.com/CTeX-org/lshort-zh-cn?tab=readme-ov-file)
 
-+ 本科：https://github.com/BHOSC/BUAAthesis/releases/download/v0.1/sample-bachelor.pdf
-+ 硕士：https://github.com/BHOSC/BUAAthesis/releases/download/v0.1/sample-master.pdf
-+ 博士：https://github.com/BHOSC/BUAAthesis/releases/download/v0.1/sample-doctor.pdf
+`report.tex`：在这个文件里编写你的报告的主要内容，你也可以根据需求将报告的各个章节拆分，然后在导入到这里面整合。运行该程序即可生成对应的PDF文件。
+
+`sample-bechelor.tex`：原项目的本科生论文模板，可以参考该模板的排版方式，以及模板中各个章节涉及到的该模板的使用方法。
+
+`/data/com_info.tex`：包含了论文标题、作者姓名、导师姓名、学院名称、专业以及中英文摘要关键字等基本信息，需要更改时，改变对应位置内容即可。
+
+`/data/bachelor/bachelor_info.tex`：原项目的本科生信息，包括班级、学号、单位代码、报告编写时间等，也可整合到`com_info.tex`中。
+
+`/out`：项目的运行结果文件夹，可以在这里找到生成的PDF文件，如`report.tex`。想要更改生成文件的位置和内容，修改`/.vscode/settings.json`里的配置内容即可。
+
+`/figure`：存放报告图片的文件夹，强烈推荐将报告涉及到的图片都放在该文件夹中，方便管理。
+
+
+
+---
+**以下内容为原项目的项目说明**
 
 ## 依赖
 
@@ -49,21 +62,6 @@ sudo apt-get install -y ttf-mscorefonts-installer  # 安装微软核心字体库
 关于Linux环境下安装字体，可以参考此篇：[linux安装字体](https://www.cnblogs.com/wangjiming/p/12553535.html)
 
 如需更多字体文件，可以去[此仓库查找并下载](https://github.com/dolbydu/font)。
-
-
-## 使用方法
-
-1. 可以使用命令行或 PowerShell 等，配合项目中的 `mamske.bat` 批处理文件进行编译，详细使用方法请见 `mamske.bat` 文件；
-
-2. 使用 Makefile，需要所使用的命令行环境支持 Make，cd 到 BUAAthesis 相应目录，目前支持以下功能
-
-+ `make bachelor` # 编译本科生的 LATEX（文件默认项，亦可直接输入 make）
-+ `make master` # 编译研究生的 LATEX 文件
-+ `make kaitireport` # 编译本科生/研究生/博士生的开题报告/文献综述文件
-+ `make clean` # 删除编译过程中生成的文件（除了 pdf）
-+ `make depclean` # 删除编译过程中生成的文件（包括 pdf）
-
-3. 使用 Visual Studio Code 等软件进行编译，请使用 `xelatex->bibtex->xelatex*2` 方式进行编译；
 
 ## 参考文献相关
 
