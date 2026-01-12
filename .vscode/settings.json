@@ -39,8 +39,9 @@
             "name": "bibtex",
             "command": "bibtex",
             "args": [
-                "-output-directory=%WORKSPACE_FOLDER%/out",
-            ]
+                "%DOCFILE%"
+            ],
+            "cwd": "%WORKSPACE_FOLDER%/out"
         }
     ],
     "latex-workshop.latex.recipes": [
@@ -69,20 +70,18 @@
             ]
         },
         {
-            "name": "xelatex -> bibtex -> bibtex -> xelatex -> xelatex",
+            "name": "xelatex -> bibtex -> xelatex -> xelatex",
             "tools": [
                 "xelatex",
-                "bibtex",
                 "bibtex",
                 "xelatex",
                 "xelatex"
             ]
         },
         {
-            "name": "pdflatex -> bibite -> bibtex -> pdflatex -> pdflatex",
+            "name": "pdflatex -> bibtex -> pdflatex -> pdflatex",
             "tools": [
                 "pdflatex",
-                "bibtex",
                 "bibtex",
                 "pdflatex",
                 "pdflatex"
@@ -117,6 +116,6 @@
     "latex-workshop.intellisense.package.enabled": true,
     "latex-workshop.message.error.show": false,
     "latex-workshop.message.warning.show": false,
-    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.latex.recipe.default": "LaTeXmk",
     "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
 }
